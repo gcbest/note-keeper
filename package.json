@@ -1,0 +1,24 @@
+{
+  "name": "note-keeper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gcbest/note-keeper.git"
+  },
+  "author": "Godfrey Best",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gcbest/note-keeper/issues"
+  },
+  "homepage": "https://github.com/gcbest/note-keeper#readme",
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "express": "^4.14.1",
+    "mongodb": "^2.2.22"
+  }
+}
