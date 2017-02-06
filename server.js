@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
-const db = require('./config/db');
+const db = require('./config/db.js');
 
 const app = express();
 
