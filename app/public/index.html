@@ -10,6 +10,7 @@
 
 	<div onclick="startButton(event);"><img alt="Start" id="start_img" src="https://speechlogger.appspot.com/images/micoff2.png"></div> 
 	
+	<p id="output"></p>
 
 </body>
 
@@ -45,9 +46,12 @@ recognition.onresult = function(event) { //the event holds the results
 
     for (var i = event.resultIndex; i < event.results.length; ++i) {      
         if (event.results[i].isFinal) { //Final results
-            console.log("final results: " + event.results[i][0].transcript);   //Of course – here is the place to do useful things with the results.
+            console.log("final results: " + event.results[i][0].transcript);
+            document.getElementById("output").innerHTML = event.results[i][0].transcript;
+               //Of course – here is the place to do useful things with the results.
         } else {   //i.e. interim...
             console.log("interim results: " + event.results[i][0].transcript);  //You can use these results to give the user near real time experience.
+            document.getElementById("output").innerHTML = "typing...."
         } 
     } //end for loop
 }; 
