@@ -19,7 +19,7 @@ module.exports = function(app, db) {
 	});
 
 	app.post('/notes', (req, res) => {
-		const note = {title: req.body.title, body: req.body.main};
+		const note = {title: req.body.title, body: req.body.main, time: req.body.created_at};
 		db.collection('notes').insert(note, (err, result) => {
 			if (err) {
 				res.send( {'error': 'An error has occured'});

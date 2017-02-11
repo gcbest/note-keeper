@@ -78,25 +78,43 @@ recognition.onresult = function(event) { //the event holds the results
 
     for (var i = event.resultIndex; i < event.results.length; ++i) {      
         if (event.results[i].isFinal) { //Final results
+            document.getElementById('output').style.backgroundColor = "purple";
             var newNote = event.results[i][0].transcript;
-            console.log("final results: " + newNote);
-            document.getElementById("output").innerHTML = event.results[i][0].transcript;
-            $.post('/notes', {
+            var newNoteObj = {
                 title: 'testNote',
-                main: newNote
-             });//.then( (response) => {
+                main: newNote,
+                created_at: moment().format("YYYY-MM-DD HH:mm:ss")
+             };
+            $.post('/notes', newNoteObj).done(function() {
+                var noteTag = $("<div>");
+                noteTag.addClass("noteOnPage");
+
+                noteTag.append("<p>" + newNote + "</p>");
+                noteTag.append("<p>At " + newNoteObj.created_at + "</p>");
+
+                $("#output").prepend(noteTag);
+             })
+
+            recognition.stop();
+            start_img.src = 'https://speechlogger.appspot.com/images/micoff2.png';
+
+        }
+
+
+
+             //.then( (response) => {
             //     console.log(response);
             // }).catch( (error) => {
             //     console.log(error);
             // });
 
-            recognition.stop();
-            start_img.src = 'https://speechlogger.appspot.com/images/micoff2.png';
+            
 
                //Of course – here is the place to do useful things with the results.
-        } else {   //i.e. interim...
+        else {   //i.e. interim...
             console.log("interim results: " + event.results[i][0].transcript);  //You can use these results to give the user near real time experience.
-            document.getElementById("output").innerHTML = "typing...."
+            // document.getElementById("output").innerHTML = "typing...."
+            document.getElementById('output').style.backgroundColor = "blue";
         } 
     } //end for loop
 }; 
