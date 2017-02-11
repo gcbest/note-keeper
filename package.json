@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/gcbest/note-keeper#readme",
   "dependencies": {
+    "axios": "^0.15.3",
     "body-parser": "^1.16.0",
     "express": "^4.14.1",
     "mongodb": "^2.2.22"

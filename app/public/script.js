@@ -42,10 +42,11 @@
 //   recognition.stop();
 // }
 
-alert('hey');
+
+// var axios = require('axios');
+
 var colors = [ 'aqua' , 'azure' , 'beige', 'bisque', 'black', 'blue', 'brown', 'chocolate', 'coral', 'crimson', 'cyan', 'fuchsia', 'ghostwhite', 'gold', 'goldenrod', 'gray', 'green', 'indigo', 'ivory', 'khaki', 'lavender', 'lime', 'linen', 'magenta', 'maroon', 'moccasin', 'navy', 'olive', 'orange', 'orchid', 'peru', 'pink', 'plum', 'purple', 'red', 'salmon', 'sienna', 'silver', 'snow', 'tan', 'teal', 'thistle', 'tomato', 'turquoise', 'violet', 'white', 'yellow'];
 var grammar = '#JSGF V1.0; grammar colors; public <color> = ' + colors.join(' | ') + ' ;'
-
 
 if (!('webkitSpeechRecognition' in window)) {
     //Speech API not supported here…
@@ -66,8 +67,6 @@ recognition.onstart = function() {
     //Listening (capturing voice from audio input) started.
     //This is a good place to give the user visual feedback about that (i.e. flash a red light, etc.)
     console.log("it lives");
-    alert("workign");
-
 };
 
 recognition.onresult = function(event) { //the event holds the results
@@ -79,9 +78,22 @@ recognition.onresult = function(event) { //the event holds the results
 
     for (var i = event.resultIndex; i < event.results.length; ++i) {      
         if (event.results[i].isFinal) { //Final results
-            console.log("final results: " + event.results[i][0].transcript);   //Of course – here is the place to do useful things with the results.
+            var newNote = event.results[i][0].transcript;
+            console.log("final results: " + newNote);
+            document.getElementById("output").innerHTML = event.results[i][0].transcript;
+            $.post('/notes', {
+                title: 'testNote',
+                main: newNote
+             });//.then( (response) => {
+            //     console.log(response);
+            // }).catch( (error) => {
+            //     console.log(error);
+            // });
+
+               //Of course – here is the place to do useful things with the results.
         } else {   //i.e. interim...
             console.log("interim results: " + event.results[i][0].transcript);  //You can use these results to give the user near real time experience.
+            document.getElementById("output").innerHTML = "typing...."
         } 
     } //end for loop
 }; 
