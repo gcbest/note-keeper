@@ -83,21 +83,29 @@ recognition.onresult = function(event) { //the event holds the results
             var newNoteObj = {
                 title: 'testNote',
                 main: newNote,
-                created_at: moment().format("YYYY-MM-DD HH:mm:ss")
+                created_at: moment().format("h:mma on MM-DD-YYYY")
              };
             $.post('/notes', newNoteObj).done(function() {
                 var noteTag = $("<div>");
                 noteTag.addClass("noteOnPage");
+                var deleteButton = $("<button/>", {
+                    text: "Remove Note",
+                    click: function() {
+                        $(this).parent().remove();
+                    }
+                });
+                deleteButton.addClass('deleteButtons');
 
-                noteTag.append("<p>" + newNote + "</p>");
-                noteTag.append("<p>At " + newNoteObj.created_at + "</p>");
+                noteTag.append("<p>" + newNote + " | Created At: " + newNoteObj.created_at + "</p>");
+                noteTag.append(deleteButton);
+                // noteTag.append("<p>At " + newNoteObj.created_at + "</p>");
 
                 $("#output").prepend(noteTag);
-             })
 
             recognition.stop();
             start_img.src = 'https://speechlogger.appspot.com/images/micoff2.png';
 
+            });
         }
 
 
@@ -117,14 +125,13 @@ recognition.onresult = function(event) { //the event holds the results
             document.getElementById('output').style.backgroundColor = "blue";
         } 
     } //end for loop
-}; 
+} 
 
 
 // document.onclick = function() {
 //   recognition.start();
 //   console.log('Ready to receive a color command.');
 // }
-
 
 function startButton(event) {
     recognition.start();
