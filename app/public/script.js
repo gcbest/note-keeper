@@ -85,13 +85,22 @@ recognition.onresult = function(event) { //the event holds the results
                 main: newNote,
                 created_at: moment().format("h:mma on MM-DD-YYYY")
              };
-            $.post('/notes', newNoteObj).done(function() {
+            $.post('/notes', newNoteObj).done(function(data) {
                 var noteTag = $("<div>");
                 noteTag.addClass("noteOnPage");
                 var deleteButton = $("<button/>", {
                     text: "Remove Note",
                     click: function() {
                         $(this).parent().remove();
+                        $.ajax({
+                            url: '/notes/' + data._id,
+                            type: 'DELETE',
+                            success: function(result) {
+                                // Do something with the result
+                                console.log(result);
+                            }
+                        });
+                        
                     }
                 });
                 deleteButton.addClass('deleteButtons');
