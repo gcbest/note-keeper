@@ -48,6 +48,7 @@
 TO DO LIST
 
 Edit tasks
+confirm the user wants to delete the task
 Trigger word to start writing task
 If you click button when already recording it doesnt break
 
