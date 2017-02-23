@@ -48,7 +48,7 @@
 TO DO LIST
 
 Edit tasks
-confirm the user wants to delete the task
+
 Trigger word to start writing task
 If you click button when already recording it doesnt break
 
@@ -120,14 +120,28 @@ recognition.onresult = function(event) { //the event holds the results
                                 }
                             });    
                         }
-                        
-                        
                     }
                 });
-                deleteButton.addClass('deleteButtons');
+                var editButton = $("<button/>", {
+                    text: "Edit Note",
+                    click: function() {
+                        if(confirm("Are you sure you want to update this task?")) {
+                            $.ajax({
+                                url: '/notes/' + data._id,
+                                type: 'PUT',
+                                success: function(result) {
+                                    // Do something with the result
+                                    console.log(result);
+                                }
+                            });    
+                        }
+                    }
+                });
+                editButton.addClass('editButtons');
 
                 noteTag.append("<p>" + newNote + " | Created At: " + newNoteObj.created_at + "</p>");
                 noteTag.append(deleteButton);
+                noteTag.append(editButton);
                 // noteTag.append("<p>At " + newNoteObj.created_at + "</p>");
 
                 $("#output").prepend(noteTag);
